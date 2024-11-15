@@ -1,13 +1,13 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: greenyellow;
+  background-color: rgb(158, 62, 62);
   color: #333;
   text-align: center;
   padding: 20px;
 }
 
 h1 {
-  color: #4b4b8a;
+  color: #2c2cb0;
   font-size: 50px;
 }
 
@@ -54,10 +54,12 @@ h1 {
 }
 
 label {
-  font-size: 18px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  column-gap: 10px;
+  height: 50px;
 }
 
 input {
@@ -77,4 +79,57 @@ button {
 
 button:hover {
   background-color: #6767b0;
+}
+
+.yourScore{
+  font-size: 20px;
+  color: white;
+}
+
+.backhome{
+  text-decoration: none;
+  color: black;
+}
+
+.backHome{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  height: 30px;
+  width: 120px;
+  justify-self: center;
+}
+
+
+.scoreBoard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: black;
+  border-radius: 50%;
+  justify-self: center;
+  margin-bottom: 10px;
+}
+
+.closeButton{
+  text-decoration: none;
+  color: black;
+}
+
+.closeBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  height: 30px;
+  width: 120px;
+  justify-self: center;
+  justify-self: flex-end;
 }

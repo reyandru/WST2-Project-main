@@ -6,6 +6,9 @@
     <title>{{ category.name }} Quiz</title>
 </head>
 <body>
+    <div class="closeBtn">
+        <a class="closeButton" href="{% url 'home' %}">Back to Home</a>
+    </div>
     <h1>{{ category.name }} Quiz</h1>
     <form method="post">
         {% csrf_token %}
