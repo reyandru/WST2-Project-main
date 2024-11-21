@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Category, Question
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
 
 @login_required
 def home(request):
@@ -25,3 +28,16 @@ def quiz(request, category_id):
         return render(request, 'quiz/result.html', {'score': score, 'total': len(questions)})
 
     return render(request, 'quiz/quiz.html', {'category': category, 'questions': questions})
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been created successfully! You can now log in.')
+            return redirect('login')  
+        else:
+            messages.error(request, 'There was an error with your registration. Please try again.')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'quiz/register.html', {'form': form})
