@@ -9,9 +9,14 @@
 </head>
 <style>
     body{
-        background-color: rgb(62, 84, 158);
+        background-color: rgb(18, 129, 61);
         color: White;
         font-family: Arial, Helvetica, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 100vh;
     }
 
     h2{
@@ -21,8 +26,12 @@
     form{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         flex-direction: column;
+        height: 600px;
+        width: 400px;
+        background-image:linear-gradient(#ad004e,#d76a22);
+        border-radius: 10px;
     }
     ul,li, span{
         font-size: 12px;
@@ -30,33 +39,32 @@
     }
 
     label{
-        font-size: 16px;
+        font-size: 24px;
     }
 
     input{
         display: block;
-        width: 200px;
-        margin: -10px;
+        width: 300px;
+        height: 50px;
+        padding: 10px;
+        font-size: 20px;
         outline: none;
+  
     }
 
     button{
         background-color: aqua;
-        color: black;
+        color: rgb(179, 23, 23);
         font-weight: bold;
     }
 
     a{
         color: white;
     }
-
 </style>
 <body>
-    <div class="header">
-        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="130" width="130">
-    </div>
-    <h2>Register</h2>
-        
+  
+    
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -66,12 +74,17 @@
     {% endif %}
     
     <form method="POST">
+        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="130" width="130">
+ 
+    <h2>Register</h2>
+        
         {% csrf_token %}
         {{ form.as_p }}  
         <button type="submit">Register</button>
+        <br>
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
     </form>
 
-    <br>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+
 </body>
 </html>

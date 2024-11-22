@@ -1,9 +1,18 @@
+*,*::before,*::after{
+  box-sizing: border-box;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: rgb(158, 62, 62);
+  background-image:linear-gradient(#22d72b,#004aad);
   color: #333;
   text-align: center;
-  padding: 20px;
+  min-height: 100vh;
 }
 
 h1 {
@@ -17,8 +26,11 @@ h1 {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
-  height: 300px;
+  gap: 50px;
+  height: 430px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 80px;
 }
 
 .category {
@@ -26,11 +38,11 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  background-color: #4b4b8a;
+  background-image:linear-gradient(#ad004e,#d76a22);
   color: white;
   text-decoration: none;
   border-radius: 5px;
-  height: 50px;
+  height: 100px;
   width: 200px;
   font-size:30px;
   font-weight: bold;
@@ -38,7 +50,7 @@ h1 {
 }
 
 .category:hover {
-  background-color: #6767b0;
+  background-image:linear-gradient(#ad004e84,#d76a227e);
 }
 
 .category:active {

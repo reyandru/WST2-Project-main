@@ -6,11 +6,51 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Quiz Categories</title>
 </head>
+<style>
+    .header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .head{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+    }
+
+    a{
+        color: white;
+        text-decoration: none;
+    }
+
+    .login_btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login_btn button{
+        height: 40%;
+
+    }
+
+    .ttl{
+    -webkit-text-stroke: 2px blue;
+
+    }
+</style>
 <body>
     <div class="header">
-        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="250" width="250">
-        <button><a href="{% static 'quiz/login.html' %}"></a></button>
+        <img  src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
+        <div class="head ttl"> <h1>BrightMind</h1></div>
+        <div class="head login_btn">
+            <button><a href="{% url 'login' %}">Login</a></button>
+        </div>
     </div>
+
+    <h1>Quiz Categories</h1>
     <div class="categories">
         {% for category in categories %}
             <a href="{% url 'quiz' category.id %}" class="category">{{ category.name }}</a>
