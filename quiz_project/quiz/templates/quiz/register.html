@@ -1,11 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Register</title>
 </head>
+<style>
+    body{
+        background-color: rgb(62, 84, 158);
+        color: White;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h2{
+        font-size: 50px;
+    }
+
+    form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    ul,li, span{
+        font-size: 12px;
+        display: none;
+    }
+
+    label{
+        font-size: 16px;
+    }
+
+    input{
+        display: block;
+        width: 200px;
+        margin: -10px;
+        outline: none;
+    }
+
+    button{
+        background-color: aqua;
+        color: black;
+        font-weight: bold;
+    }
+
+    a{
+        color: white;
+    }
+
+</style>
 <body>
+    <div class="header">
+        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="130" width="130">
+    </div>
     <h2>Register</h2>
         
     {% if messages %}
