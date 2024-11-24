@@ -26,9 +26,9 @@
                 <p>{{ question.text }}</p>
                 {% for choice in question.choice_set.all %}
                     <label>
-                        <input type="radio" name="{{ question.id }}" value="{{ choice.choice_text }}">
+                        <input type="radio" name="question_{{ question.id }}" value="{{ choice.choice_text }}" data-answer="{{ question.answer }}" data-question-id="{{ question.id }}">
                         {{ choice.choice_text }}
-                    </label>
+                    </label><br>
                 {% endfor %}
                 <div class="timer" id="timer-{{ question.id }}">20</div>
             </div>
@@ -38,10 +38,11 @@
 
     <script>
         let currentQuestionIndex = 0;
+        let score = 0;
         const questions = document.querySelectorAll('.question');
-        const timerElements = document.querySelectorAll('.timer');
         const submitButton = document.getElementById('submit-button');
-        
+        let timerInterval;
+
         function showQuestion(index) {
             if (index < questions.length) {
                 questions[index].style.display = 'block';
@@ -53,26 +54,63 @@
 
         function startTimer(index) {
             let timeLeft = 20;
-            const timerElement = document.getElementById('timer-' + (index + 1));
+            const timerElement = document.getElementById('timer-' + index);
 
-            const timerInterval = setInterval(function() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            timerInterval = setInterval(function() {
                 timeLeft--;
                 timerElement.textContent = timeLeft;
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    questions[index].style.display = 'none';
-                    currentQuestionIndex++;
-                    showQuestion(currentQuestionIndex);
+                    nextQuestion();
                 }
             }, 1000);
         }
+
+        function nextQuestion() {
+            questions[currentQuestionIndex].style.display = 'none';
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                submitButton.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('change', function(event) {
+            if (event.target.type === 'radio') {
+                const selectedChoice = event.target;
+                const correctAnswer = selectedChoice.getAttribute('data-answer');
+                const selectedAnswer = selectedChoice.value;
+
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                }
+
+                nextQuestion();
+            }
+        });
 
         for (let i = 1; i < questions.length; i++) {
             questions[i].style.display = 'none';
         }
 
         showQuestion(currentQuestionIndex);
+
+        document.getElementById('quiz-form').onsubmit = function(event) {
+            event.preventDefault();
+            if (currentQuestionIndex < questions.length) {
+                nextQuestion();
+            } else {
+                alert('Your score is ' + score + ' out of ' + questions.length);
+                this.submit();
+            }
+        };
     </script>
 </body>
 </html>
