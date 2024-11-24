@@ -41,7 +41,7 @@ def submit_quiz(request, category_id):
     score = 0
 
     for question in questions:
-        selected_answer = request.POST.get(f'question-{question.id}')
+        selected_answer = request.POST.get(f'question_{question.id}')
         if selected_answer == question.answer:
             score += 1
 
