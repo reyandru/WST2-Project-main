@@ -9,7 +9,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-image:linear-gradient(#22d72b,#004aad);
+  background-image:linear-gradient(#004aad,#e3ebe4);
   color: #333;
   text-align: center;
   min-height: 100vh;
@@ -33,12 +33,19 @@ h1 {
   margin-top: 80px;
 }
 
+form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .category {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  background-image:linear-gradient(#ad004e,#d76a22);
+  background-color: #004aad;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -50,7 +57,7 @@ h1 {
 }
 
 .category:hover {
-  background-image:linear-gradient(#ad004e84,#d76a227e);
+  background-image:linear-gradient(#2b22d77e,#00ad1784);
 }
 
 .category:active {
@@ -60,25 +67,35 @@ h1 {
 .question {
   margin: 20px 0;
   padding: 15px;
-  background: #f0f0ff;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
+  background: #f0f0ff88;
+  border-radius: 8px; 
   font-size: 24px;
+  height: 350px;
+  width: 1200px;
 }
 
 label {
-  font-size: 24px;
   display: flex;
   align-items: center;
   column-gap: 10px;
-  height: 50px;
+  row-gap: 10px;
 }
 
 input {
   width: 30px;
   height: 20px;
   cursor: pointer;
+}
+
+.choicesBtn{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: white;
+  font-size: 24px;
+  color: Blue;
+  height: 50px;
+  width: 300px;
 }
 
 button {
@@ -140,9 +157,10 @@ button:hover {
   align-items: center;
   background-color: white;
   border-radius: 10px;
-  text-align: center;
-  height: 30px;
+  text-align: center; 
+  height: 40px;
   width: 120px;
-  justify-self: center;
   justify-self: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
 }
