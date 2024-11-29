@@ -46,7 +46,6 @@ def submit_quiz(request, category_id):
         if selected_answer == question.answer:
             score += 1
         else:
-            # Collect the wrong answer details
             wrong_answers.append({
                 "question": question.text,
                 "your_answer": selected_answer,

@@ -5,31 +5,59 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Quiz Result</title>
 </head>
-<body>
-    <h1>Your Score</h1>
-    <h3 style="color: whitesmoke;">You scored</h3>
-    <div class="scoreBoard">
-        <p class="yourScore">{{ score }} out of {{ total }}</p>
-    </div>
+<style>
+    .scoreContainter{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        row-gap: 20px;
+    }
+    .redAnswer{
+        color: red;
+    }
+    .greenAnswer{
+        color: rgb(3, 100, 3);
+    }
 
-    <!-- Wrong Answers Section -->
+    .wrongAnswers, li{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        row-gap: 10px;
+        text-align: left;
+        font-size: 24px;
+        }
+    .noIncorrect{
+    color: blue;
+    }
+</style>
+<body>
+    <div class="scoreContainter">
+        <h1>Your Score</h1>
+        <h3 style="color: whitesmoke;">You scored</h3>
+        <div class="scoreBoard">
+            <p class="yourScore">{{ score }} out of {{ total }}</p>
+        </div>
+        <div class="backHome">
+            <a class="backhome" href="{% url 'home' %}">Back to Home</a>
+        </div> 
+    </div>
+   
+
     <div class="wrongAnswers">
         <h3>Incorrect Answers:</h3>
         <ul>
             {% for answer in wrong_answers %}
                 <li>
                     <strong>Question:</strong> {{ answer.question }}<br>
-                    <strong>Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
-                    <strong>Correct Answer:</strong> {{ answer.correct_answer }}
+                    <strong class="redAnswer">Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
+                    <strong class="greenAnswer"></strongclass>Correct Answer:</strong> {{ answer.correct_answer }}
                 </li>
             {% empty %}
-                <p>No wrong answers! Great job!</p>
+                <p class="noIncorrect">No wrong answers! Great job!</p>
             {% endfor %}
         </ul>
-    </div>
-
-    <div class="backHome">
-        <a class="backhome" href="{% url 'home' %}">Back to Home</a>
     </div>
 </body>
 </html>
