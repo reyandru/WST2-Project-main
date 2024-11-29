@@ -11,6 +11,23 @@
     <div class="scoreBoard">
         <p class="yourScore">{{ score }} out of {{ total }}</p>
     </div>
+
+    <!-- Wrong Answers Section -->
+    <div class="wrongAnswers">
+        <h3>Incorrect Answers:</h3>
+        <ul>
+            {% for answer in wrong_answers %}
+                <li>
+                    <strong>Question:</strong> {{ answer.question }}<br>
+                    <strong>Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
+                    <strong>Correct Answer:</strong> {{ answer.correct_answer }}
+                </li>
+            {% empty %}
+                <p>No wrong answers! Great job!</p>
+            {% endfor %}
+        </ul>
+    </div>
+
     <div class="backHome">
         <a class="backhome" href="{% url 'home' %}">Back to Home</a>
     </div>

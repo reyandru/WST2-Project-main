@@ -39,10 +39,23 @@ def submit_quiz(request, category_id):
 
     questions = Question.objects.filter(category=category).order_by('?')[:10]
     score = 0
+    wrong_answers = []
 
     for question in questions:
         selected_answer = request.POST.get(f'question_{question.id}')
         if selected_answer == question.answer:
             score += 1
+        else:
+            # Collect the wrong answer details
+            wrong_answers.append({
+                "question": question.text,
+                "your_answer": selected_answer,
+                "correct_answer": question.answer,
+            })
 
-    return render(request, 'quiz/result.html', {'score': score, 'total': len(questions)})
+    return render(request, 'quiz/result.html', {
+        'score': score,
+        'total': len(questions),
+        'wrong_answers': wrong_answers,
+    })
+
