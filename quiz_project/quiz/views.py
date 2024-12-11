@@ -27,7 +27,7 @@ def quiz(request, category_id):
     except Category.DoesNotExist:
         return redirect('home')
 
-    questions = Question.objects.filter(category=category).order_by('?')[:10]
+    questions = Question.objects.filter(category=category).order_by('?')[:15]
     return render(request, 'quiz/quiz.html', {'category': category, 'questions': questions})
 
 @login_required
@@ -37,7 +37,7 @@ def submit_quiz(request, category_id):
     except Category.DoesNotExist:
         return redirect('home')
 
-    questions = Question.objects.filter(category=category).order_by('?')[:10]
+    questions = Question.objects.filter(category=category).order_by('?')[:15]
     score = 0
     wrong_answers = []
 
