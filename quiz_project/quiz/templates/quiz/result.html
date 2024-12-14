@@ -17,7 +17,7 @@
         color: red;
     }
     .greenAnswer{
-        color: rgb(3, 100, 3);
+        color: rgb(46, 180, 46);
     }
 
     .wrongAnswers, li{
@@ -27,9 +27,18 @@
         row-gap: 10px;
         text-align: left;
         font-size: 24px;
+        color: white;
         }
     .noIncorrect{
     color: blue;
+    }
+
+    li, strong{
+     color: white;
+    }
+
+    li{
+        margin-bottom: 50px;
     }
 </style>
 <body>
@@ -51,6 +60,7 @@
             {% for answer in wrong_answers %}
                 <li>
                     <strong>Question:</strong> {{ answer.question }}<br>
+                    
                     <strong class="redAnswer">Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
                     <strong class="greenAnswer"></strongclass>Correct Answer:</strong> {{ answer.correct_answer }}
                 </li>

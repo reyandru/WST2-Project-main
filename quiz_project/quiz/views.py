@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Category, Question
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User  # Import the User model
 
 @login_required
 def home(request):
@@ -57,4 +58,3 @@ def submit_quiz(request, category_id):
         'total': len(questions),
         'wrong_answers': wrong_answers,
     })
-

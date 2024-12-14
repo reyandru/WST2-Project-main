@@ -11,6 +11,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+        background-color: skyblue;
     }
     .head{
         display: flex;
@@ -20,42 +21,52 @@
     }
 
     a{
-        color: white;
+
         text-decoration: none;
     }
 
-    .login_btn{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login_btn a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: blue;
-        border-radius: 5px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-    }
 
     .ttl{
         -webkit-text-stroke: 2px blue;
+        margin-left: 100px;
     }
+
+    .users{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+    }
+
+    .username{
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .btnLogout{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        padding: 10px;
+        width: 80px;
+        background-color: blue;
+        border-radius: 10px;
+        color: white;
+    }
+
 </style>
 <body>
     <div class="header">
         <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
         <div class="head ttl"> <h1>BrightMind</h1></div>
-        <div class="head login_btn">
-            <a href="{% url 'login' %}">Login</a>
+        <div class="users">
+            <p class="username">{{ request.user.username }}</p>
+            <a  class="btnLogout" href="{% url 'login' %}">Logout</a>
         </div>
     </div>
 
-  
     <div class="categories">
         {% for category in categories %}
             <a href="{% url 'quiz' category.id %}" class="category">{{ category.name }}</a>
@@ -63,5 +74,11 @@
             <p>No categories available.</p>
         {% endfor %}    
     </div>
+
+    <script>
+        document.getElementById("btnLogout").addEventListener('click', function(){
+
+        });
+    </script>
 </body>
 </html>

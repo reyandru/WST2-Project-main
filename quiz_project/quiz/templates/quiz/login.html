@@ -1,79 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
 </head>
 <style>
     body{
-        background-color: rgb(18, 129, 61);
-        color: White;
-        font-family: Arial, Helvetica, sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         min-height: 100vh;
     }
-
     h2{
         font-size: 50px;
+        color: white;
+        margin-bottom: 10px;
     }
 
     form{
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        flex-direction: column;
-        height: 600px;
-        width: 400px;
-        background-image:linear-gradient(#ad004e,#d76a22);
+        background-color: rgb(29, 121, 212);
+        width: 25%;
+        height: 500px;
         border-radius: 10px;
-    }
-    ul,li, span{
-        font-size: 12px;
-        display: none;
-    }
-
-    label{
-        font-size: 24px;
+        font-weight: 800;
+        row-gap: 30px;
+        color: white;
+        font-size: 16px;
     }
 
     input{
-        display: block;
         width: 300px;
         height: 50px;
+        font-size: 18px;
         padding: 10px;
-        font-size: 20px;
+        border: none;
         outline: none;
     }
 
     button{
-        background-color: aqua;
-        color: rgb(179, 23, 23);
-        font-weight: bold;
+        width: 100px;
     }
-
-    a{
-        color: white;
-    }
-
+   
+   .li{
+        display: none;
+   }
 </style>
 <body>
-  
-      
+    <h2>Login</h2>
     <form method="POST">
-        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="130" width="130">
-  
-        <h2>Login</h2>
-        {% csrf_token %}
+        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
         {{ form.as_p }}
+        {% csrf_token %}
         <button type="submit">Login</button>
-        <br>
-        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        <p>You don't have an account?. <a href="{% url 'register' %}"> Register</a> </p>
+       
     </form>
   
 </body>
