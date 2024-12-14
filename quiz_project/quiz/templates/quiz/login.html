@@ -1,62 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'quiz/favicon.png' %}">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            font-size: 50px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        form {
+            background-color: rgb(29, 121, 212);
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: 800;
+            row-gap: 20px;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        button {
+            width: 100px;
+            padding: 10px;
+            border: none;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        p {
+            margin-top: 10px;
+            color: white;
+        }
+        p a {
+            color: yellow;
+            text-decoration: none;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+        img {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-<style>
-    body{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    h2{
-        font-size: 50px;
-        color: white;
-        margin-bottom: 10px;
-    }
-
-    form{
-        background-color: rgb(29, 121, 212);
-        width: 25%;
-        height: 500px;
-        border-radius: 10px;
-        font-weight: 800;
-        row-gap: 30px;
-        color: white;
-        font-size: 16px;
-    }
-
-    input{
-        width: 300px;
-        height: 50px;
-        font-size: 18px;
-        padding: 10px;
-        border: none;
-        outline: none;
-    }
-
-    button{
-        width: 100px;
-    }
-   
-   .li{
-        display: none;
-   }
-</style>
 <body>
     <h2>Login</h2>
     <form method="POST">
-        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
-        {{ form.as_p }}
+        <img src="{% static 'quiz/QuizQuest.png' %}" alt="QuizQuest Logo" height="120" width="120">
         {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="error-message">{{ form.non_field_errors|join:', ' }}</div>
+        {% endif %}
+        
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error-message">{{ field.errors|join:', ' }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
         <button type="submit">Login</button>
-        <p>You don't have an account?. <a href="{% url 'register' %}"> Register</a> </p>
-       
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
     </form>
-  
 </body>
 </html>

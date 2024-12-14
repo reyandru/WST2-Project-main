@@ -1,22 +1,22 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-import re
+from django.core.exceptions import ValidationError
+from .models import User  
 
-class CustomUserCreationForm(UserCreationForm):
-    username = forms.CharField(
-        max_length=30,
-        min_length=3,
-        help_text='Required. 3-30 characters. Letters and digits only.',
-        widget=forms.TextInput(attrs={'placeholder': 'Username'})
-    )
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = User 
+        fields = ['username', 'password1', 'password2']  
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        if not re.match(r'^[\w.@+-]+$', username):
-            raise forms.ValidationError('Username can only contain letters, numbers, and @/./+/-/_')
+        username = self.cleaned_data.get('username')
+        if ' ' in username:
+            raise ValidationError('Username has no spaces.')
         return username
 
-    class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2', 'email')
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            self.add_error('password2', 'Passwords do not match.')
