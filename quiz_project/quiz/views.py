@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Category, Question
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User  # Import the User model
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
 
 @login_required
 def home(request):
@@ -17,9 +18,25 @@ def register(request):
             form.save()
             messages.success(request, "Your account has been created successfully! Please log in.")
             return redirect('login')
+        else:
+            messages.error(request, "There was an error creating your account. Please try again.")
     else:
         form = UserCreationForm()
     return render(request, 'quiz/register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user) 
+            return redirect('home')  
+        else:
+            context = {'error_message': 'Username and Password are incorrect'}
+            return render(request, 'quiz/login.html', context)
+    return render(request, 'quiz/login.html')
 
 @login_required
 def quiz(request, category_id):
