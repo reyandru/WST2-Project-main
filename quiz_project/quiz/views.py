@@ -79,7 +79,7 @@ def submit_quiz(request, category_id):
     average = round((score / total_questions) * 100, 2) if total_questions > 0 else 0
 
     if 90 <= average <= 100:
-        image = "quiz/QuizQuest.png"
+        image = "quiz/congrats.png"
     elif 60 <= average <= 89:
         image = "quiz/great.png"
     elif 40 <= average <= 59:
