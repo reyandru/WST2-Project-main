@@ -1,3 +1,5 @@
+# views.py
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Category, Question
@@ -45,7 +47,8 @@ def quiz(request, category_id):
     except Category.DoesNotExist:
         return redirect('home')
 
-    questions = Question.objects.filter(category=category).order_by('?')[:15]
+    num_questions = int(request.GET.get('num_questions', 15))  
+    questions = Question.objects.filter(category=category).order_by('?')[:num_questions]
     return render(request, 'quiz/quiz.html', {'category': category, 'questions': questions})
 
 @login_required
@@ -55,7 +58,9 @@ def submit_quiz(request, category_id):
     except Category.DoesNotExist:
         return redirect('home')
 
-    questions = Question.objects.filter(category=category).order_by('?')[:15]
+    num_questions = int(request.POST.get('num_questions', 15))  # Get number of questions selected
+    questions = Question.objects.filter(category=category).order_by('?')[:num_questions]
+    
     score = 0
     wrong_answers = []
 
@@ -71,7 +76,7 @@ def submit_quiz(request, category_id):
             })
 
     total_questions = len(questions)
-    average = (score / total_questions) * 100 if total_questions > 0 else 0
+    average = round((score / total_questions) * 100, 2) if total_questions > 0 else 0
 
     if 90 <= average <= 100:
         image = "quiz/QuizQuest.png"
