@@ -5,18 +5,21 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>{{ category.name }} Quiz</title>
     <style>
+        h1{
+            -webkit-text-stroke: 2px red;
+        }
         .question {
         margin: 20px 0;
-        padding: 15px;
+        padding: 20px;
         background: #f0f0ff88;
         border-radius: 8px; 
         font-size: 24px;
-        height: 550px;
-        width: 1200px;
+        height: 590px;
+        width: 1400px;
         }
 
         .questionText{
-            color: yellow;
+            color: black;
             font-size: 30px;
             font-weight: bold;
             height: 150px;
@@ -27,7 +30,7 @@
             justify-content: center;
             }
 
-            .timer-wrapper {
+        .timer-wrapper {
             width: 100%;
             height: 30px;
             background-color: #f3f3f3;
@@ -39,9 +42,18 @@
         label{
             font-size: 35px;
             font-weight: bold;
+            cursor: pointer;
+            height: 50px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        label:hover{
+            background-color: greenyellow;
         }
 
         input{
+            display: none;
             height: 30px;
         }
 

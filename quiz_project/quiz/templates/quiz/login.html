@@ -20,7 +20,6 @@
         }
         h2 {
             font-size: 50px;
-            color: white;
             margin-bottom: 10px;
         }
         form {
@@ -31,7 +30,6 @@
             border-radius: 10px;
             font-weight: 800;
             row-gap: 20px;
-            color: white;
             font-size: 16px;
             display: flex;
             flex-direction: column;
@@ -86,8 +84,16 @@
     <form method="post">
         <img src="{% static 'quiz/QuizQuest.png' %}" alt="QuizQuest Logo" height="120" width="120">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div> 
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div>  
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+       
+      
         
         {% if error_message %}
             <div class="error-message">

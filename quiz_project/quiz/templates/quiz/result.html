@@ -6,53 +6,79 @@
     <title>Quiz Result</title>
 </head>
 <style>
-    .scoreContainter{
+
+    .scoreb {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 50%;
+    }
+
+    .scoreContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 10px;
         row-gap: 20px;
+        height: 820px;
+        background-color: rgba(137, 43, 226, 0.493);
     }
-    .redAnswer{
+
+    .redAnswer {
         color: red;
     }
-    .greenAnswer{
+
+    .greenAnswer {
         color: rgb(46, 180, 46);
     }
 
-    .wrongAnswers, li{
+    .wrongAnswers {
         display: flex;
         flex-direction: column;
         padding: 10px;
         row-gap: 10px;
         text-align: left;
         font-size: 24px;
-        color: white;
-        }
-    .noIncorrect{
-    color: blue;
     }
 
-    li, strong{
-     color: white;
+    .noIncorrect {
+        color: blue;
     }
 
-    li{
+    h1 {
+        font-size: 100px;
+        color: blueviolet;
+    }
+
+    .resultImage {
+        width: 300px;
+        height: auto;
+    }
+
+    li {
         margin-bottom: 50px;
     }
+
 </style>
 <body>
-    <div class="scoreContainter">
-        <h1>Your Score</h1>
-        <h3 style="color: whitesmoke;">You scored</h3>
-        <div class="scoreBoard">
-            <p class="yourScore">{{ score }} out of {{ total }}</p>
-        </div>
+    <div class="scoreContainer">
         <div class="backHome">
             <a class="backhome" href="{% url 'home' %}">Back to Home</a>
-        </div> 
+        </div>
+        <h1>Quiz Results</h1>
+        <img src="{% static image %}" alt="Result Image" class="resultImage">
+        <div class="scoreb">
+            <div class="scoreBoard">
+                <div class="scoreCont head"><h3>You scored</h3> </div>
+                <div class="scoreCont"><p class="yourScore">{{ score }} out of {{ total }}</p></div>
+            </div>
+
+            <div class="percent">
+                <div class="scoreCont head"><h3>Percentage</h3></div>
+                <div class="scoreCont"><p>{{ average }}%</p></div>
+            </div>
+        </div>
     </div>
-   
 
     <div class="wrongAnswers">
         <h3>Incorrect Answers:</h3>
@@ -62,7 +88,7 @@
                     <strong>Question:</strong> {{ answer.question }}<br>
                     
                     <strong class="redAnswer">Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
-                    <strong class="greenAnswer"></strongclass>Correct Answer:</strong> {{ answer.correct_answer }}
+                    <strong class="greenAnswer">Correct Answer:</strong> {{ answer.correct_answer }}
                 </li>
             {% empty %}
                 <p class="noIncorrect">No wrong answers! Great job!</p>

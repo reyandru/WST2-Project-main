@@ -70,8 +70,24 @@ def submit_quiz(request, category_id):
                 "correct_answer": question.answer,
             })
 
+    total_questions = len(questions)
+    average = (score / total_questions) * 100 if total_questions > 0 else 0
+
+    if 90 <= average <= 100:
+        image = "quiz/QuizQuest.png"
+    elif 60 <= average <= 89:
+        image = "quiz/great.png"
+    elif 40 <= average <= 59:
+        image = "quiz/nice.png"
+    elif 15 <= average <= 39:
+        image = "quiz/good.png"
+    else:
+        image = "quiz/study.png"
+
     return render(request, 'quiz/result.html', {
         'score': score,
-        'total': len(questions),
+        'total': total_questions,
+        'average': average,
+        'image': image,
         'wrong_answers': wrong_answers,
     })
