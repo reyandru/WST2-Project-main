@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
+    {% load static %} 
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>{{ category.name }} Quiz</title>
     <style>
-        h1{
+        h1 {
             -webkit-text-stroke: 2px red;
         }
         .question {
-        margin: 20px 0;
-        padding: 20px;
-        background: #f0f0ff88;
-        border-radius: 8px; 
-        font-size: 24px;
-        height: 590px;
-        width: 1400px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f0f0ff88;
+            border-radius: 8px; 
+            font-size: 24px;
+            height: 590px;
+            width: 1400px;
         }
-
-        .questionText{
+        .questionText {
             color: black;
             font-size: 30px;
             font-weight: bold;
@@ -28,8 +27,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            }
-
+        }
         .timer-wrapper {
             width: 100%;
             height: 30px;
@@ -38,8 +36,7 @@
             margin-top: 10px;
             overflow: hidden;
         }
-
-        label{
+        label {
             font-size: 35px;
             font-weight: bold;
             cursor: pointer;
@@ -47,27 +44,36 @@
             padding: 10px;
             border-radius: 10px;
         }
-
-        label:hover{
+        label:hover {
             background-color: greenyellow;
         }
-
-        input{
+        input {
             display: none;
             height: 30px;
         }
-
         .timer-bar {
             height: 100%;
             background-color: red;
             width: 100%;
             transition: width 1s linear;
         }
+        #mute-button {
+        position: absolute;
+        top: 12px;
+        right: 150px;
+        background-color: rgba(218, 51, 51, 0.925);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
     </style>
 </head>
 <body>
     <div class="closeBtn">
         <a class="closeButton" href="{% url 'home' %}">Back to Home</a>
+        <div id="mute-button">Mute</div>
     </div>
     <h1>{{ category.name }} Quiz</h1>
     <form method="post" action="{% url 'submit_quiz' category.id %}" id="quiz-form">
@@ -89,6 +95,15 @@
         <button type="submit" id="submit-button" style="display:none;">Submit Quiz</button>
     </form>
 
+    <audio id="start-sound" controls autoplay loop style="display:none;">
+        <source src="{% static 'sounds/start_quiz.mp3' %}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="submit-sound" controls autoplay loop style="display:none;">
+        <source src="{% static 'sounds/submit_quiz.mp3' %}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
         let currentQuestionIndex = 0;
         let score = 0;
@@ -96,11 +111,15 @@
         const submitButton = document.getElementById('submit-button');
         let timerInterval;
         const timerBars = document.querySelectorAll('.timer-bar');
+        let audioMuted = false;
 
         function showQuestion(index) {
             if (index < questions.length) {
                 questions[index].style.display = 'block';
                 startTimer(index);
+                if (!audioMuted) {
+                    document.getElementById('start-sound').play(); 
+                }
             } else {
                 submitButton.style.display = 'block';
             }
@@ -161,11 +180,19 @@
 
         document.getElementById('quiz-form').onsubmit = function(event) {
             event.preventDefault();
+            document.getElementById('submit-sound').play(); 
             if (currentQuestionIndex < questions.length) {
                 nextQuestion();
             } else {
                 this.submit();
             }
+        };
+
+        document.getElementById('mute-button').onclick = function() {
+            audioMuted = !audioMuted;
+            this.textContent = audioMuted ? 'Unmute' : 'Mute';
+            document.getElementById('start-sound').muted = audioMuted;
+            document.getElementById('submit-sound').muted = audioMuted;
         };
     </script>
 </body>

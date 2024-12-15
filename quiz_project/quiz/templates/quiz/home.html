@@ -6,31 +6,27 @@
     <title>Quiz Categories</title>
 </head>
 <style>
-    .header{
+    .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 20px;
         background-color: rgba(0, 162, 226, 0.511);
     }
-    .head{
+    .head {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100px;
     }
-
-    a{
+    a {
         text-decoration: none;
     }
-
-
-    .ttl{
+    .ttl {
         -webkit-text-stroke: 2px blue;
         margin-left: 130px;
     }
-
-    .users{
+    .users {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -38,13 +34,11 @@
         column-gap: 10px;
         width: 15%;
     }
-
-    .username{
+    .username {
         font-size: 30px;
         font-weight: 800;
     }
-
-    .btnLogout{
+    .btnLogout {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -56,17 +50,37 @@
         color: white;
         font-size: 12px;
     }
-
+    .mute-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(218, 51, 51, 0.925);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    #home-sound {
+        display: none;
+    }
 </style>
 <body>
     <div class="header">
         <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
         <div class="head ttl"> <h1>BrightMind</h1></div>
         <div class="users">
+            <button class="mute-button" id="mute-button">Mute</button>
             <p class="username">{{ request.user.username }}</p>
             <a class="btnLogout" href="{% url 'login' %}">Logout</a>
         </div>
     </div>
+
+    <audio id="home-sound" autoplay loop>
+        <source src="{% static 'sounds/home_page.mp3' %}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
 
     <div class="categories">
         {% for category in categories %}
@@ -77,9 +91,17 @@
     </div>
 
     <script>
-        document.getElementById("btnLogout").addEventListener('click', function(){
+        const audio = document.getElementById('home-sound');
+        const muteButton = document.getElementById('mute-button');
 
+        muteButton.addEventListener('click', function() {
+            audio.muted = !audio.muted;
+            this.textContent = audio.muted ? 'Unmute' : 'Mute';
         });
+
+        window.onload = function() {
+            audio.play(); 
+        };
     </script>
 </body>
 </html>
