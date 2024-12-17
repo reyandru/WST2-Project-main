@@ -1,5 +1,3 @@
-# views.py
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Category, Question
@@ -40,6 +38,26 @@ def login_view(request):
             return render(request, 'quiz/login.html', context)
     return render(request, 'quiz/login.html')
 
+
+def reset_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        try:
+            user = User.objects.get(username=username)
+            if new_password == confirm_password:
+                user.set_password(new_password)  
+                user.save()
+                messages.success(request, "Password successfully updated! You can now log in.")
+                return redirect('login')
+            else:
+                messages.error(request, "Passwords do not match. Please try again.")
+        except User.DoesNotExist:
+            messages.error(request, "Username does not exist. Please try again.")
+
+    return render(request, 'quiz/reset_password.html')
 @login_required
 def quiz(request, category_id):
     try:

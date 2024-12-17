@@ -5,72 +5,12 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Quiz Categories</title>
 </head>
-<style>
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        background-color: rgba(0, 162, 226, 0.511);
-    }
-    .head {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100px;
-    }
-    a {
-        text-decoration: none;
-    }
-    .ttl {
-        -webkit-text-stroke: 2px blue;
-        margin-left: 130px;
-    }
-    .users {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        column-gap: 10px;
-        width: 15%;
-    }
-    .username {
-        font-size: 30px;
-        font-weight: 800;
-    }
-    .btnLogout {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 30px;
-        padding: 10px;
-        width: 60px;
-        background-color: blue;
-        border-radius: 10px;
-        color: white;
-        font-size: 12px;
-    }
-    .mute-button {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background-color: rgba(218, 51, 51, 0.925);
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-    #home-sound {
-        display: none;
-    }
-</style>
 <body>
     <div class="header">
-        <img src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
+        <img class="logo" src="{% static 'quiz/QuizQuest.png' %}" alt="BrightMind" height="120" width="120">
         <div class="head ttl"> <h1>BrightMind</h1></div>
         <div class="users">
-            <button class="mute-button" id="mute-button">Mute</button>
+            <button class="muteBtn" id="muteBtns">Mute</button>
             <p class="username">{{ request.user.username }}</p>
             <a class="btnLogout" href="{% url 'login' %}">Logout</a>
         </div>
@@ -92,7 +32,7 @@
 
     <script>
         const audio = document.getElementById('home-sound');
-        const muteButton = document.getElementById('mute-button');
+        const muteButton = document.getElementById('muteBtns');
 
         muteButton.addEventListener('click', function() {
             audio.muted = !audio.muted;

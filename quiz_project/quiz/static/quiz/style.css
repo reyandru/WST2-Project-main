@@ -39,6 +39,196 @@ form{
   flex-direction: column;
 }
 
+.loginBody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+.loginHeader {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+.formLogin {
+  background-color: rgb(29, 121, 212);
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: 800;
+  row-gap: 20px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+.loginInput {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.loginBtn {
+  width: 100px;
+  padding: 10px;
+  border: none;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.loginBtn:hover {
+  background-color: #555;
+}
+.linksAcc{
+  color: white;
+}
+.linksAcc a {
+  color: yellow;
+  text-decoration: none;
+}
+.linksAcc a:hover {
+  text-decoration: underline;
+}
+.loginLogo {
+  margin-bottom: 20px;
+}
+
+.resetBody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+.resetForm {
+  background-color: rgb(29, 121, 212);
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.resetHead{
+font-size: 50px;
+margin-bottom: 10px;
+}
+
+.resetInput, .resetButton {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+.resetButton {
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+.resetButton:hover {
+  background-color: #555;
+}
+.message {
+  color: red;
+  font-size: 14px;
+}
+
+.resetLogin{
+  color: yellow;
+  text-decoration: none;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: rgba(0, 162, 226, 0.511);
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.ttl {
+  -webkit-text-stroke: 2px blue;
+  margin-left: 250px;
+}
+
+.ttl:hover{
+  -webkit-text-stroke: 2px red;
+  cursor: pointer;
+}
+
+.users {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  column-gap: 10px;
+  width: 25%;
+}
+.username {
+  font-size: 30px;
+  font-weight: 800;
+  width: 1000px;
+}
+.btnLogout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 10px;
+  width: 60px;
+  background-color: blue;
+  border-radius: 10px;
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+}
+.muteBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(218, 51, 51, 0.925);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#home-sound {
+  display: none;
+}
+
 .category {
   display: flex;
   align-items: center;
@@ -63,6 +253,71 @@ form{
   transform: scale(0.90);
 }
 
+.categoryName{
+  font-size: 50px;
+  -webkit-text-stroke: 2px red;
+}
+
+.question {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f0f0ff88;
+  border-radius: 8px; 
+  font-size: 24px;
+  height: 590px;
+  width: 1400px;
+}
+.questionText {
+  color: black;
+  font-size: 30px;
+  font-weight: bold;
+  height: 150px;
+  margin-bottom: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timer-wrapper {
+  width: 100%;
+  height: 30px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.quizLabel{
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.quizLabel:hover {
+  background-color: greenyellow;
+}
+.quizInput {
+  display: none;
+  height: 30px;
+}
+.timer-bar {
+  height: 100%;
+  background-color: red;
+  width: 100%;
+  transition: width 1s linear;
+}
+#mute-button {
+position: absolute;
+top: 12px;
+right: 150px;
+background-color: rgba(218, 51, 51, 0.925);
+color: white;
+border: none;
+padding: 10px 15px;
+cursor: pointer;
+border-radius: 5px;
+}
 
 label {
   display: flex;
@@ -119,6 +374,74 @@ button:hover {
   margin-left: 1350px;
 }
 
+.scoreb {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.scoreContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  row-gap: 20px;
+  height: 820px;
+  background-color: rgba(137, 43, 226, 0.493);
+}
+
+.redAnswer {
+  color: red;
+}
+
+.greenAnswer {
+  color: rgb(46, 180, 46);
+}
+
+.wrongAnswers {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  row-gap: 10px;
+  text-align: left;
+  font-size: 24px;
+}
+
+.noIncorrect {
+  color: blue;
+}
+
+.resultHeader{
+  font-size: 100px;
+  color: blueviolet;
+}
+
+.resultImage {
+  width: 300px;
+  height: auto;
+  animation: showup 2s ease-in-out;
+}
+
+.liResult{
+  margin-bottom: 50px;
+}
+
+@keyframes showup {
+  from {
+      transform: scale(0.1);
+  }
+  75% {
+      transform: scale(0.8);
+  }
+  25% {
+      transform: scale(1);
+  }
+  to {
+      transform: scale(1);
+  }
+} 
+
 
 .scoreBoard, .percent{
   display: flex;
@@ -167,4 +490,175 @@ button:hover {
   justify-self: flex-end;
   margin-top: 11px;
   margin-right: 10px;
+}
+
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px;
+  }
+
+  h1, .resetHead, .loginHeader, .categoryName {
+    font-size: 28px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .ttl{
+    margin-left: 10px;
+  }
+
+  .username{
+    font-size: 24px;
+  margin-left: -30px;
+  }
+
+  .categories {
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .category {
+    font-size: 18px;
+    height: 70px;
+    width: 90%;
+  }
+
+  .formLogin, .resetForm {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  #mute-button{
+    right: 100px;
+  }
+
+  .loginInput, .resetInput {
+    height: 40px;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .loginBtn, .resetButton {
+    font-size: 14px;
+    height: 40px;
+  }
+
+  .question {
+    width: 100%;
+    font-size: 18px;
+    padding: 20px;
+    height: 430px;
+  }
+
+  .timer-wrapper{
+    margin-top: -10px;
+  }
+
+  .questionText, .quizLabel{
+    font-size: 12px;
+    height: 50px;
+  }
+
+  .resultHeader {
+    font-size: 40px;
+  }
+
+  .scoreBoard, .percent {
+    width: 90%;
+    font-size: 20px;
+    height: auto;
+    padding: 10px;
+  }
+
+  .closeBtn, .backHome {
+    font-size: 14px;
+    height: 35px;
+    width: 90px;
+  }
+
+  .btnLogout {
+    width: 80px;
+    font-size: 12px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  h1, .resetHead, .loginHeader {
+    font-size: 20px;
+  }
+  
+  .categoryName{
+    font-size: 25px;
+    -webkit-text-stroke: 1px red;
+  }
+
+  .header {
+    padding: 5px;
+    flex-direction: column;
+  }
+
+  .categories {
+    gap: 10px;
+  }
+
+  .category {
+    font-size: 14px;
+    height: 60px;
+    width: 100%;
+  }
+
+  .formLogin, .resetForm {
+    padding: 10px;
+  }
+
+  .loginInput, .resetInput {
+    height: 35px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .loginBtn, .resetButton {
+    height: 35px;
+    font-size: 12px;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .resultHeader {
+    font-size: 24px;
+  }
+
+  .scoreBoard, .percent {
+    font-size: 16px;
+    width: 100%;
+    height: auto;
+  }
+
+  .closeBtn, .backHome {
+    font-size: 12px;
+    height: 30px;
+    width: 80px;
+  }
+
+  .btnLogout {
+    width: 70px;
+    font-size: 10px;
+    height: 25px;
+  }
 }

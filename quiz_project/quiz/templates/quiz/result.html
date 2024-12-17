@@ -5,92 +5,20 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>Quiz Result</title>
 </head>
-<style>
-
-    .scoreb {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        width: 50%;
-    }
-
-    .scoreContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        row-gap: 20px;
-        height: 820px;
-        background-color: rgba(137, 43, 226, 0.493);
-        background-image: url();
-    }
-
-    .redAnswer {
-        color: red;
-    }
-
-    .greenAnswer {
-        color: rgb(46, 180, 46);
-    }
-
-    .wrongAnswers {
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        row-gap: 10px;
-        text-align: left;
-        font-size: 24px;
-    }
-
-    .noIncorrect {
-        color: blue;
-    }
-
-    h1 {
-        font-size: 100px;
-        color: blueviolet;
-    }
-
-    .resultImage {
-        width: 300px;
-        height: auto;
-        animation: showup 2s ease-in-out; 
-    }
-
-    li {
-        margin-bottom: 50px;
-    }
-    
-    @keyframes showup {
-  from {
-    transform: scale(0.1);
-  }
-
-  75% {
-    transform: scale(0.8);
-  }
-  25% {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-</style>
 <body>
     <div class="scoreContainer">
         <div class="backHome">
             <a class="backhome" href="{% url 'home' %}">Back to Home</a>
         </div>
-        <h1>Quiz Results</h1>
+        <h1 class="resultHeader">Quiz Results</h1>
+
         <img src="{% static image %}" alt="Result Image" class="resultImage">
+
         <div class="scoreb">
             <div class="scoreBoard">
-                <div class="scoreCont head"><h3>You scored</h3> </div>
+                <div class="scoreCont head"><h3>You scored</h3></div>
                 <div class="scoreCont"><p class="yourScore">{{ score }} out of {{ total }}</p></div>
             </div>
-
             <div class="percent">
                 <div class="scoreCont head"><h3>Percentage</h3></div>
                 <div class="scoreCont"><p>{{ average }}%</p></div>
@@ -102,9 +30,8 @@
         <h3>Incorrect Answers:</h3>
         <ul>
             {% for answer in wrong_answers %}
-                <li>
+                <li class="liResult">
                     <strong>Question:</strong> {{ answer.question }}<br>
-                    
                     <strong class="redAnswer">Your Answer:</strong> {{ answer.your_answer|default:"No Answer" }}<br>
                     <strong class="greenAnswer">Correct Answer:</strong> {{ answer.correct_answer }}
                 </li>
@@ -114,13 +41,13 @@
         </ul>
     </div>
 
-    <audio id="result-sound">
+    <audio id="result-sound" autoplay>
+        {% if image == "quiz/study.png" %}
+        <source src="{% static 'sounds/Lowscore.mp3' %}" type="audio/mp3">
+        {% else %}
         <source src="{% static 'sounds/appluase.mp3' %}" type="audio/mp3">
+        {% endif %}
         Your browser does not support the audio element.
     </audio>
-
-    <script>
-        document.getElementById('result-sound').play();
-    </script>
 </body>
 </html>
