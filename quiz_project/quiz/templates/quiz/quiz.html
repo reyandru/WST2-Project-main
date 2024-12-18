@@ -1,9 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %} 
+    {% load static %}
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>{{ category.name }} Quiz</title>
+    <style>
+        /* Review Section Styles */
+        #review-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: rgba(240, 240, 240, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #review-section h2 {
+            font-size: 28px;
+            color: #4b0082;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #review-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        #review-list li {
+            font-size: 18px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #4b0082;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #review-list li:nth-child(odd) {
+            background-color: #f3f3ff;
+        }
+
+        #review-list li strong {
+            color: #4b0082;
+        }
+
+        #submit-button {
+            background-color: #4b0082;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #submit-button:hover {
+            background-color: #3a0069;
+        }
+    </style>
 </head>
 <body>
     <div class="closeBtn">
@@ -13,21 +76,29 @@
     <h1 class="categoryName">{{ category.name }} Quiz</h1>
     <form method="post" action="{% url 'submit_quiz' category.id %}" id="quiz-form">
         {% csrf_token %}
-        {% for question in questions %}
-            <div class="question" id="question-{{ question.id }}">
-                <p class="questionText">{{ question.text }}</p>
-                {% for choice in question.choice_set.all %}
-                    <label class="quizLabel">
-                        <input class="quizInput" type="radio" name="question_{{ question.id }}" value="{{ choice.choice_text }}" data-answer="{{ question.answer }}">
-                        {{ choice.choice_text }}
-                    </label><br>
-                {% endfor %}
-                <div class="timer-wrapper">
-                    <div class="timer-bar" id="timer-bar-{{ question.id }}"></div>
+        <div id="questions-container">
+            {% for question in questions %}
+                <div class="question" id="question-{{ question.id }}">
+                    <p class="questionText">{{ question.text }}</p>
+                    {% for choice in question.choice_set.all %}
+                        <label class="quizLabel">
+                            <input class="quizInput" type="radio" name="question_{{ question.id }}" value="{{ choice.choice_text }}" data-answer="{{ question.answer }}">
+                            {{ choice.choice_text }}
+                        </label><br>
+                    {% endfor %}
+                    <div class="timer-wrapper">
+                        <div class="timer-bar" id="timer-bar-{{ question.id }}"></div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-        <button type="submit" id="submit-button" style="display:none;">Submit Quiz</button>
+            {% endfor %}
+        </div>
+
+        <!-- Review Section -->
+        <div id="review-section" style="display:none;">
+            <h2>Review Your Answers</h2>
+            <ul id="review-list"></ul>
+            <button type="submit" id="submit-button">Submit Quiz</button>
+        </div>
     </form>
 
     <audio id="start-sound" controls autoplay loop style="display:none;">
@@ -41,11 +112,13 @@
 
     <script>
         let currentQuestionIndex = 0;
-        let score = 0;
         const questions = document.querySelectorAll('.question');
         const submitButton = document.getElementById('submit-button');
+        const reviewSection = document.getElementById('review-section');
+        const reviewList = document.getElementById('review-list');
         let timerInterval;
         const timerBars = document.querySelectorAll('.timer-bar');
+        let answers = {}; 
         let audioMuted = false;
 
         function showQuestion(index) {
@@ -56,7 +129,7 @@
                     document.getElementById('start-sound').play(); 
                 }
             } else {
-                submitButton.style.display = 'block';
+                showReview();
             }
         }
 
@@ -89,19 +162,33 @@
             if (currentQuestionIndex < questions.length) {
                 showQuestion(currentQuestionIndex);
             } else {
-                submitButton.style.display = 'block';
+                showReview();
+            }
+        }
+
+        function showReview() {
+            document.getElementById('questions-container').style.display = 'none';
+            reviewSection.style.display = 'block';
+
+            reviewList.innerHTML = '';
+            for (let questionId in answers) {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>Question:</strong> ${answers[questionId].question}<br><strong>Your Answer:</strong> ${answers[questionId].answer || "No Answer"}`;
+                reviewList.appendChild(li);
             }
         }
 
         document.addEventListener('change', function(event) {
             if (event.target.type === 'radio') {
                 const selectedChoice = event.target;
-                const correctAnswer = selectedChoice.getAttribute('data-answer');
+                const questionText = selectedChoice.closest('.question').querySelector('.questionText').textContent;
+                const questionId = selectedChoice.name.split('_')[1]; 
                 const selectedAnswer = selectedChoice.value;
 
-                if (selectedAnswer === correctAnswer) {
-                    score++;
-                }
+                answers[questionId] = {
+                    question: questionText,
+                    answer: selectedAnswer
+                };
 
                 nextQuestion();
             }
@@ -114,13 +201,7 @@
         showQuestion(currentQuestionIndex);
 
         document.getElementById('quiz-form').onsubmit = function(event) {
-            event.preventDefault();
             document.getElementById('submit-sound').play(); 
-            if (currentQuestionIndex < questions.length) {
-                nextQuestion();
-            } else {
-                this.submit();
-            }
         };
 
         document.getElementById('mute-button').onclick = function() {
