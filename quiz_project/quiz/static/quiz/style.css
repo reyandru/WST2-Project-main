@@ -520,15 +520,15 @@ button:hover {
   }
 
   .categories {
-    flex-direction: column;
-    gap: 20px;
     margin-top: 20px;
+    display: grid;
+    align-items: center;
   }
 
   .category {
     font-size: 18px;
     height: 70px;
-    width: 90%;
+    width: 400px;
   }
 
   .formLogin, .resetForm {
@@ -537,7 +537,8 @@ button:hover {
   }
   
   #mute-button{
-    right: 100px;
+    right: 120px;
+    top: 15px;
   }
 
   .loginInput, .resetInput {
@@ -571,17 +572,48 @@ button:hover {
     font-size: 40px;
   }
 
-  .scoreBoard, .percent {
+  .percent {
     width: 90%;
     font-size: 20px;
     height: auto;
     padding: 10px;
   }
+.wrongAnswers{
+  font-size: 16px;
+}
+.wrongAnswers li{
+  list-style-type: none;
+}
+  
+  .scoreBoard {
+    width: 90%;
+    font-size: 12px;
+    height: auto;
+    padding: 15px;
+  }
 
-  .closeBtn, .backHome {
+  .scoreb{
+  flex-direction: column;
+  }
+
+  .resultImage{
+  width: 200px;
+  }
+
+  .closeBtn {
     font-size: 14px;
     height: 35px;
     width: 90px;
+  }
+
+  .scoreCont {
+    font-size: 30px;
+    }
+    .backHome{
+    font-size: 14px;
+    height: 35px;
+    width: 90px;
+    margin-left:580px;
   }
 
   .btnLogout {
@@ -612,13 +644,14 @@ button:hover {
   }
 
   .categories {
-    gap: 10px;
+    display: block;
   }
 
   .category {
     font-size: 14px;
     height: 60px;
     width: 100%;
+    margin-bottom: 10px;
   }
 
   .formLogin, .resetForm {
@@ -641,7 +674,7 @@ button:hover {
   }
 
   .resultHeader {
-    font-size: 24px;
+    font-size: 35px;
   }
 
   .scoreBoard, .percent {
@@ -650,15 +683,30 @@ button:hover {
     height: auto;
   }
 
-  .closeBtn, .backHome {
+  .closeBtn{
     font-size: 12px;
     height: 30px;
     width: 80px;
+  }
+
+  .backHome{
+    font-size: 12px;
+    height: 30px;
+    width: 80px;
+    margin-left:330px;
   }
 
   .btnLogout {
     width: 70px;
     font-size: 10px;
     height: 25px;
+  }
+
+  .scoreContainer{
+   height: 790px;
+  }
+
+.scoreCont {
+  font-size: 20px;
   }
 }
