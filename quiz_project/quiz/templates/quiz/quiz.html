@@ -5,46 +5,7 @@
     <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
     <title>{{ category.name }} Quiz</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        .closeBtn {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #4b0082;
-            color: white;
-        }
-
-        .closeButton {
-            color: white;
-            text-decoration: none;
-        }
-
-        h1 {
-            text-align: center;
-            color: #4b0082;
-        }
-
-        .question {
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-        }
-
-        .quizLabel {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
+     
         #submit-button {
             background-color: #4b0082;
             color: white;
@@ -53,92 +14,12 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 20px auto;
-            display: block;
+            margin-top: 20px;
             transition: background-color 0.3s ease-in-out;
         }
 
         #submit-button:hover {
             background-color: #3a0069;
-        }
-
-        #review-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: rgba(240, 240, 240, 0.8);
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        #review-list {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-        }
-
-        #review-list li {
-            font-size: 18px;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #4b0082;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        #review-list li:nth-child(odd) {
-            background-color: #f3f3ff;
-        }
-
-        #review-list li strong {
-            color: #4b0082;
-        }
-
-        @media (max-width: 768px) {
-            .closeBtn {
-                flex-direction: column;
-                align-items: center;
-                padding: 15px;
-            }
-
-            .closeButton {
-                margin-bottom: 10px;
-            }
-
-            h1 {
-                font-size: 22px;
-                margin: 15px;
-            }
-
-            .question {
-                width: 90%;
-                padding: 15px;
-            }
-
-            .quizLabel {
-                font-size: 16px;
-            }
-
-            #submit-button {
-                font-size: 16px;
-                padding: 10px 15px;
-            }
-
-            #review-section {
-                width: 90%;
-                padding: 15px;
-            }
-
-            #review-list li {
-                font-size: 16px;
-                padding: 8px;
-            }
         }
     </style>
 </head>
@@ -160,11 +41,13 @@
                             {{ choice.choice_text }}
                         </label><br>
                     {% endfor %}
+                    <div class="timer-wrapper">
+                        <div class="timer-bar" id="timer-bar-{{ question.id }}"></div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
 
-        <!-- Review Section -->
         <div id="review-section" style="display:none;">
             <h2>Review Your Answers</h2>
             <ul id="review-list"></ul>
@@ -187,14 +70,43 @@
         const submitButton = document.getElementById('submit-button');
         const reviewSection = document.getElementById('review-section');
         const reviewList = document.getElementById('review-list');
-        let answers = {};
+        let timerInterval;
+        const timerBars = document.querySelectorAll('.timer-bar');
+        let answers = {}; // Store user's selected answers
+        let audioMuted = false;
 
         function showQuestion(index) {
             if (index < questions.length) {
                 questions[index].style.display = 'block';
+                startTimer(index);
+                if (!audioMuted) {
+                    document.getElementById('start-sound').play(); 
+                }
             } else {
                 showReview();
             }
+        }
+
+        function startTimer(index) {
+            let timeLeft = 20;
+            const timerBar = timerBars[index];
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            timerBar.style.width = '100%';
+
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                const width = (timeLeft / 20) * 100;
+                timerBar.style.width = width + '%';
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    nextQuestion();
+                }
+            }, 1000);
         }
 
         function nextQuestion() {
@@ -209,9 +121,11 @@
         }
 
         function showReview() {
+            // Hide questions and display review section
             document.getElementById('questions-container').style.display = 'none';
             reviewSection.style.display = 'block';
 
+            // Populate review list
             reviewList.innerHTML = '';
             for (let questionId in answers) {
                 const li = document.createElement('li');
@@ -222,12 +136,17 @@
 
         document.addEventListener('change', function(event) {
             if (event.target.type === 'radio') {
-                const questionText = event.target.closest('.question').querySelector('.questionText').textContent;
-                const questionId = event.target.name.split('_')[1];
+                const selectedChoice = event.target;
+                const questionText = selectedChoice.closest('.question').querySelector('.questionText').textContent;
+                const questionId = selectedChoice.name.split('_')[1]; // Extract question ID
+                const selectedAnswer = selectedChoice.value;
+
+                // Store user's selected answer
                 answers[questionId] = {
                     question: questionText,
-                    answer: event.target.value
+                    answer: selectedAnswer
                 };
+
                 nextQuestion();
             }
         });
@@ -237,6 +156,17 @@
         }
 
         showQuestion(currentQuestionIndex);
+
+        document.getElementById('quiz-form').onsubmit = function(event) {
+            document.getElementById('submit-sound').play(); 
+        };
+
+        document.getElementById('mute-button').onclick = function() {
+            audioMuted = !audioMuted;
+            this.textContent = audioMuted ? 'Unmute' : 'Mute';
+            document.getElementById('start-sound').muted = audioMuted;
+            document.getElementById('submit-sound').muted = audioMuted;
+        };
     </script>
 </body>
 </html>
